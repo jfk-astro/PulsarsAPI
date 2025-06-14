@@ -21,15 +21,67 @@ public class PulsarService {
         loadPulsarsFromCSV();
     }
 
+    /**
+     * Retrieves a pulsar using binary search given its name, if there is no suitable pulsar, it will return null.
+     * @param name The name of the pulsar to retrieve.
+     *             If the name is not found, it will return null.
+     *             If the name is found, it will return the pulsar object.
+     * @return The pulsar object if found, otherwise null.
+     */
     public Pulsar getPulsarFromName(String name) {
-        for (Pulsar pulsar : pulsars) {
-            if (pulsar.getName().equalsIgnoreCase(name)) {
-                log.info("Found pulsar: {}", pulsar.getName());
-                return pulsar;
+        // Similar to the addition, it uses binary search to find the pulsar by its name.
+        int high = pulsars.size() - 1;
+        int low = 0;
+
+        while (low <= high) {
+            int midpoint = (low + high) / 2;
+
+            Pulsar currentPulsar = pulsars.get(midpoint);
+            int comparison = currentPulsar.getName().compareToIgnoreCase(name);
+
+            if (comparison == 0) {
+                log.info("Found pulsar: {}", currentPulsar.getName());
+                return currentPulsar;
+            } else if (comparison < 0) {
+                low = midpoint + 1;
+            } else {
+                high = midpoint - 1;
             }
         }
 
         log.warn("Pulsar with name '{}' not found.", name);
+        return null;
+    }
+
+    /**
+     * Removes a pulsar from the list using its name.
+     * @param name The name of the pulsar to remove.
+     * @return The pulsar object if found, otherwise null.
+     */
+    public Pulsar removePulsarFromName(String name) {
+        // This method uses binary search to find the pulsar by its name and removes it from the list.
+
+        int high = pulsars.size() - 1;
+        int low = 0;
+
+        while (low <= high) {
+            int midpoint = (low + high) / 2;
+
+            Pulsar currentPulsar = pulsars.get(midpoint);
+            int comparison = currentPulsar.getName().compareToIgnoreCase(name);
+
+            if (comparison == 0) {
+                pulsars.remove(midpoint);
+                log.info("Removed pulsar: {}", currentPulsar.getName());
+                return currentPulsar;
+            } else if (comparison < 0) {
+                low = midpoint + 1;
+            } else {
+                high = midpoint - 1;
+            }
+        }
+
+        log.warn("Pulsar with name '{}' not found for removal.", name);
         return null;
     }
 
@@ -47,6 +99,9 @@ public class PulsarService {
     }
 
     private void addPulsar(Pulsar pulsar) {
+        // This adds the pulsar using the binary search algorithm.
+        // Whenever a pulsar is added, it will automatically be placed in the correct position.
+
         int low = 0;
         int high = pulsars.size() - 1;
 
