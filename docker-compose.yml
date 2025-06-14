@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./api-java
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cppservice
+
+  cppservice:
+    build:
+      context: ./calc-cpp
+    ports:
+      - "8081:8081"
