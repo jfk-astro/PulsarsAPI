@@ -14,14 +14,11 @@ def fetch_pulsar_data():
         "EDOT"          # Spin-down Luminosity
     ])
 
-    df = query.table
-
-    return df
+    return query.table.to_pandas()
 
 def save_to_csv(df, filename="../data/pulsars_data.csv"):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     df.to_csv(filename, index=False)
 
 if __name__ == "__main__":
-    df = fetch_pulsar_data()
-    save_to_csv(df)
+    save_to_csv(fetch_pulsar_data())
