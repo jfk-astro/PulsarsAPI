@@ -1,8 +1,11 @@
 package com.jfkastro.pulsarsapi.service;
 
+import com.jfkastro.pulsarsapi.exception.PulsarException;
+
 import com.jfkastro.pulsarsapi.model.Pulsar;
 
 import com.jfkastro.pulsarsapi.util.CSVParser;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,7 +25,23 @@ public class PulsarService {
     }
 
     /**
+     * Retrieves all loaded pulsars.
+     *
+     * @return A list of all pulsars.
+     */
+    public List<Pulsar> getAllPulsars() {
+        if (pulsars.isEmpty()) {
+            log.warn("No pulsars are currently loaded.");
+            return new ArrayList<>();
+        }
+
+        log.info("Retrieved {} pulsars.", pulsars.size());
+        return new ArrayList<>(pulsars);
+    }
+
+    /**
      * Retrieves a pulsar using binary search given its name, if there is no suitable pulsar, it will return null.
+     *
      * @param name The name of the pulsar to retrieve.
      *             If the name is not found, it will return null.
      *             If the name is found, it will return the pulsar object.
@@ -30,6 +49,12 @@ public class PulsarService {
      */
     public Pulsar getPulsarFromName(String name) {
         // Similar to the addition, it uses binary search to find the pulsar by its name.
+
+        if (name.isEmpty() || name.isBlank()) {
+            log.warn("Attempted to find pulsar with an empty or blank name.");
+            return null;
+        }
+
         int high = pulsars.size() - 1;
         int low = 0;
 
@@ -60,6 +85,11 @@ public class PulsarService {
      */
     public Pulsar removePulsarFromName(String name) {
         // This method uses binary search to find the pulsar by its name and removes it from the list.
+
+        if (name.isEmpty() || name.isBlank()) {
+            log.warn("Attempted to remove pulsar with an empty or blank name.");
+            return null;
+        }
 
         int high = pulsars.size() - 1;
         int low = 0;
@@ -98,9 +128,15 @@ public class PulsarService {
         }
     }
 
-    private void addPulsar(Pulsar pulsar) {
+    private void addPulsar(Pulsar pulsar) throws PulsarException {
         // This adds the pulsar using the binary search algorithm.
         // Whenever a pulsar is added, it will automatically be placed in the correct position.
+
+        if (pulsar == null || pulsar.getName() == null || pulsar.getName().isEmpty()) {
+            log.warn("Attempted to add a pulsar with an empty or null name.");
+
+            throw new PulsarException("Pulsar name cannot be null or empty.");
+        }
 
         int low = 0;
         int high = pulsars.size() - 1;
@@ -111,6 +147,7 @@ public class PulsarService {
 
             if (comparator == 0) {
                 log.warn("Pulsar with name '{}' already exists.", pulsar.getName());
+                return;
             } else if (comparator < 0) {
                 high = midpoint - 1;
             } else {

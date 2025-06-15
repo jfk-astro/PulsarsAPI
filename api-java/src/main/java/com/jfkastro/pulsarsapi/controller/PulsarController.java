@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/pulsars")
 @Slf4j
@@ -22,6 +24,32 @@ public class PulsarController {
         this.pulsarService = new PulsarService();
     }
 
+    /**
+     * Retrieves all pulsars.
+     *
+     * @return A ResponseEntity containing a list of all pulsars or a no content status if none are found.
+     */
+    @GetMapping
+    public ResponseEntity<List<Pulsar>> getPulsars() {
+        List<Pulsar> pulsars = pulsarService.getAllPulsars();
+
+        if (pulsars.isEmpty()) {
+            log.warn("No pulsars found.");
+
+            return ResponseEntity.noContent().build();
+        } else {
+            log.info("Returning {} pulsars.", pulsars.size());
+
+            return ResponseEntity.ok(pulsars);
+        }
+    }
+
+    /**
+     * Retrieves a pulsar by its name.
+     *
+     * @param name The name of the pulsar to retrieve.
+     * @return A ResponseEntity containing the pulsar if found, or a not found status if not found.
+     */
     @GetMapping("/{name}")
     public ResponseEntity<Pulsar> getPulsarByName(@PathVariable String name) {
         Pulsar pulsar = pulsarService.getPulsarFromName(name);

@@ -10,17 +10,27 @@ import java.io.FileReader;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-
 import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class CSVParser {
+    private CSVParser() {}
+
+    /**
+     * Parses a CSV file containing pulsar data and returns a list of Pulsar objects.
+     *
+     * @param filePath The path to the CSV file.
+     * @return A list of Pulsar objects parsed from the CSV file.
+     * @throws Exception If an error occurs while reading the file or parsing the data.
+     */
     public static List<Pulsar> parseCSV(String filePath) throws Exception {
         List<Pulsar> pulsars = new ArrayList<>();
 
-        int added = 0, missed = 0;
+        int added = 0;
+        int missed = 0;
 
         log.info(
                 "Loading CSV file last modified on {}.",
@@ -40,6 +50,7 @@ public class CSVParser {
                 if(parsedTokens.length < 11) {
                     log.warn("Skipped pulsar {} due to improper data.", parsedTokens[0]);
                     missed++;
+
                     continue;
                 }
 
@@ -78,6 +89,7 @@ public class CSVParser {
             return Double.parseDouble(value.trim());
         } catch (NumberFormatException e) {
             log.error("Error parsing double value: {}", value, e);
+
             return null;
         }
     }
