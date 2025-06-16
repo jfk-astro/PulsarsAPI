@@ -57,9 +57,28 @@ public class PulsarController {
         if (pulsar != null) {
             log.info("Pulsar found: {}", pulsar);
             return ResponseEntity.ok(pulsar);
-        } else {
-            log.warn("Pulsar not found with name: {}", name);
-            return ResponseEntity.notFound().build();
         }
+
+        log.warn("Pulsar not found with name: {}", name);
+        return ResponseEntity.notFound().build();
+    }
+
+    /**
+     * Retrieves a pulsar by ID.
+     *
+     * @param id The id of the pulsar to retrieve.
+     * @return A ResponseEntity containing the pulsar if found, or a not found status if not found.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Pulsar> getPulsarById(@PathVariable long id) {
+        Pulsar pulsar = pulsarService.getPulsarFromId(id);
+
+        if (pulsar != null) {
+            log.info("Pulsar found: {}", pulsar);
+            return ResponseEntity.ok(pulsar);
+        }
+
+        log.warn("Pulsar not found with ID: {}", id);
+        return ResponseEntity.notFound().build();
     }
 }

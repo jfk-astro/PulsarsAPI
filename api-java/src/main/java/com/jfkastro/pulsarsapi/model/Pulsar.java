@@ -6,6 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Pulsar {
+    public static long previousId = 0;
+
     private long id;
 
     private String name;
@@ -40,5 +42,8 @@ public class Pulsar {
         this.p0 = p0;
         this.dm = dm;
         this.edot = edot;
+        this.id = previousId;
+
+        ++previousId;
     }
 }

@@ -40,6 +40,24 @@ public class PulsarService {
     }
 
     /**
+     * Retrieves a specific pulsar from its assigned ID by brute forcing through the pulsar list.
+     * If no such matching ID is found, the function will return null
+     *
+     * @param id The matching ID of the pulsar.
+     * @return If the ID is matched, it will return the pulsar.
+     *         If the ID is not matched, it will return null.
+     */
+    public Pulsar getPulsarFromId(long id) {
+        for (Pulsar p : pulsars) {
+            if (p.getId() == id) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Retrieves a pulsar using binary search given its name, if there is no suitable pulsar, it will return null.
      *
      * @param name The name of the pulsar to retrieve.
@@ -50,7 +68,7 @@ public class PulsarService {
     public Pulsar getPulsarFromName(String name) {
         // Similar to the addition, it uses binary search to find the pulsar by its name.
 
-        if (name.isEmpty() || name.isBlank()) {
+        if (name.isBlank()) {
             log.warn("Attempted to find pulsar with an empty or blank name.");
             return null;
         }
@@ -86,7 +104,7 @@ public class PulsarService {
     public Pulsar removePulsarFromName(String name) {
         // This method uses binary search to find the pulsar by its name and removes it from the list.
 
-        if (name.isEmpty() || name.isBlank()) {
+        if (name.isBlank()) {
             log.warn("Attempted to remove pulsar with an empty or blank name.");
             return null;
         }
@@ -119,7 +137,6 @@ public class PulsarService {
         try {
             List<Pulsar> pulsarList = CSVParser.parseCSV("src/main/resources/pulsars.csv");
 
-            // TODO: Implement auto sorting in the CSVParser itself, this should suffice for now, though.
             for(Pulsar p : pulsarList) {
                 addPulsar(p);
             }
