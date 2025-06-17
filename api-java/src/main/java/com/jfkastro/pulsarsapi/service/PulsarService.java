@@ -133,6 +133,25 @@ public class PulsarService {
         return null;
     }
 
+    /**
+     * Removes a pulsar from the list using its ID.
+     *
+     * @param id The ID attribute of each pulsar.
+     * @return If a pulsar is found with a matching ID, then the function returns that pulsar.
+     *         If no pulsar is found with a matching ID, then the function returns null.
+     */
+    public Pulsar removePulsarFromId(long id) {
+        for (Pulsar p : pulsars) {
+            if (p.getId() == id) {
+                pulsars.remove(p);
+                log.info("Removed pulsar of ID: {}", p.getName());
+                return p;
+            }
+        }
+        log.warn("Pulsar of ID '{}' not found for removal.", id);
+        return null;
+    }
+
     private void loadPulsarsFromCSV() {
         try {
             List<Pulsar> pulsarList = CSVParser.parseCSV("src/main/resources/pulsars.csv");
