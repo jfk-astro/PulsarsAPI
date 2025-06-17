@@ -55,4 +55,4 @@ docker build -t calc-cpp .
 After compilation, you should get an executable file such as a `.exe`.
 
 ## Credits
-PulsarsAPI was writen by Saumil Sharma and Om Kasar.
+PulsarsAPI was writen by Saumil Sharma, Kason Lai, and Om Kasar.
