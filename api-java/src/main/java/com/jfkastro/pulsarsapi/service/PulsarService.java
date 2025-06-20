@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -149,6 +150,26 @@ public class PulsarService {
             }
         }
         log.warn("Pulsar of ID '{}' not found for removal.", id);
+        return null;
+    }
+
+    /**
+     * Replaces a pulsar with another pulsar using the old pulsar's ID.
+     *
+     * @param oldId The old ID of the pulsar.
+     * @param newPulsar The new pulsar object to replace the old pulsar.
+     * @return If the ID corresponding to the desired pulsar is found, the old pulsar is returned.
+     *         If the ID corresponding to the desired pulsar is not found, null is returned.
+     */
+    public Pulsar replacePulsarById(long oldId, Pulsar newPulsar) {
+        for (int i = 0; i < pulsars.size(); ++i) {
+            if (pulsars.get(i).getId() == oldId) {
+                Pulsar oldPulsar = pulsars.get(i);
+                pulsars.set(i, newPulsar);
+                return oldPulsar;
+            }
+        }
+        log.warn("Pulsar of ID '{}' not found for replacement.", oldId);
         return null;
     }
 
