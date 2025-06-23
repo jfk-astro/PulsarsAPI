@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+@Deprecated
 @Slf4j
 public class TXTParser {
     private TXTParser() {}

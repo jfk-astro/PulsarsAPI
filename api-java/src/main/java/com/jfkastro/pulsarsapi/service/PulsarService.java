@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -186,7 +185,8 @@ public class PulsarService {
         }
     }
 
-    public Pulsar createPulsarFromTXT(int line) {
+    @Deprecated
+    private Pulsar createPulsarFromTXT(int line) {
         try {
             return TXTParser.parseTxt("src/main/resources/addPulsar.txt", line);
         } catch (Exception exception) {
