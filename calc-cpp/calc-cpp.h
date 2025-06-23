@@ -1,8 +1,6 @@
-﻿// calc-cpp.h : Include file for standard system include files,
-// or project specific include files.
+﻿#ifndef CALC_CPP_H
+#define CALC_CPP_H
 
-#pragma once
+#include "./include/crow_all.h"
 
-#include <iostream>
-
-// TODO: Reference additional headers your program requires here.
+#endif // CALC_CPP_H
