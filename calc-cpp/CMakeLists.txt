@@ -12,7 +12,7 @@ endif()
 project ("calc-cpp")
 
 # Add source to this project's executable.
-add_executable (calc-cpp "calc-cpp.cpp" "calc-cpp.h" "handler/calculate_handler.h" "server/server.h")
+add_executable (calc-cpp "calc-cpp.cpp" "calc-cpp.h" "handler/calculate_handler.h" "server/server.h" "handler/calculate_handler.cpp" "server/server.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET calc-cpp PROPERTY CXX_STANDARD 20)

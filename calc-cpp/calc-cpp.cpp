@@ -1,5 +1,8 @@
 ﻿#include "calc-cpp.h"
 
 int main() {
-	crow::SimpleApp app;
+	CrowServer server;
+
+	server.setup_routes();
+	server.run();
 }
