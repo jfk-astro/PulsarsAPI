@@ -1,7 +1,8 @@
-# PulsarsAPI
-> PulsarsAPI is an API for easy access to Pulsars. This project is made using Springboot for Java and Crow for C++.
+<p align="center">
+    <img src="docs/images/PulsarsAPI.png" width="400px" alt="Pulsars API Logo">
+</p>
 
-PulsarsAPI is a project composed of many microservices aimed to give easy access to pulsar data via a database from the [Australia Telescope National Facility](https://www.atnf.csiro.au/).
+PulsarsAPI is a project composed of many microservices aimed to give easy access to pulsar data via a database from the [Australia Telescope National Facility](https://www.atnf.csiro.au/). This project is made using Springboot for Java and Crow for C++.
 
 PulsarsAPI provides various endpoints for **calculations and data.** Some example endpoints would be `/api/pulsars` and `/api/calculate`.
 
