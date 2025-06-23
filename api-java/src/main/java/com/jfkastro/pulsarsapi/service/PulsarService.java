@@ -6,6 +6,7 @@ import com.jfkastro.pulsarsapi.model.Pulsar;
 
 import com.jfkastro.pulsarsapi.util.CSVParser;
 
+import com.jfkastro.pulsarsapi.util.TXTParser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -177,12 +178,21 @@ public class PulsarService {
         try {
             List<Pulsar> pulsarList = CSVParser.parseCSV("src/main/resources/pulsars.csv");
 
-            for(Pulsar p : pulsarList) {
+            for (Pulsar p : pulsarList) {
                 addPulsar(p);
             }
         } catch (Exception exception) {
             log.error("Error loading pulsars from CSV file: {}", exception.getMessage());
         }
+    }
+
+    public Pulsar createPulsarFromTXT(int line) {
+        try {
+            return TXTParser.parseTxt("src/main/resources/addPulsar.txt", line);
+        } catch (Exception exception) {
+            log.error("Error creating pulsar from TXT file: {}", exception.getMessage());
+        }
+        return null;
     }
 
     private void addPulsar(Pulsar pulsar) throws PulsarException {

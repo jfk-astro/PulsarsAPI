@@ -47,7 +47,7 @@ public class CSVParser {
 
                 String[] parsedTokens = currentLine.split(",");
 
-                if(parsedTokens.length < 11) {
+                if (parsedTokens.length < 11) {
                     log.warn("Skipped pulsar {} due to improper data.", parsedTokens[0]);
                     missed++;
 
