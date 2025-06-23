@@ -1,12 +1,8 @@
-﻿// calc-cpp.cpp : Defines the entry point for the application.
-//
+﻿#include "calc-cpp.h"
 
-#include "calc-cpp.h"
+int main() {
+	CrowServer server;
 
-using namespace std;
-
-int main()
-{
-	cout << "Hello CMake." << endl;
-	return 0;
+	server.setup_routes();
+	server.run();
 }
