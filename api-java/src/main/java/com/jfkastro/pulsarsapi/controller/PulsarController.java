@@ -19,12 +19,13 @@ import java.util.List;
 @Slf4j
 public class PulsarController {
     private final PulsarService pulsarService;
-    public String key;
+    private final String accessKey;
 
     public PulsarController(PulsarService pulsarService) {
         this.pulsarService = pulsarService;
-        String key = pulsarService.generateRandomNumber();
+        this.accessKey = pulsarService.generateRandomNumber();
 
+        log.info("PulsarController initialized with access key: {}", accessKey);
     }
 
     /**

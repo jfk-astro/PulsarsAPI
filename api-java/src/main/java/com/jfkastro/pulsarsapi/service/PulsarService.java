@@ -5,9 +5,11 @@ import com.jfkastro.pulsarsapi.exception.PulsarException;
 import com.jfkastro.pulsarsapi.model.Pulsar;
 
 import com.jfkastro.pulsarsapi.util.CSVParser;
-
 import com.jfkastro.pulsarsapi.util.TXTParser;
+
 import org.springframework.stereotype.Service;
+
+import java.io.FileWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +189,15 @@ public class PulsarService {
             randomNumber.append(random.nextInt(50));
         }
 
-        return randomNumber.toString();
+        String key = randomNumber.toString();
+
+        try {
+            writeKeyToFile(key);
+        } catch (PulsarException e) {
+            log.error("Error writing access key to file: {}", e.getMessage());
+        }
+
+        return key;
     }
 
     private void loadPulsarsFromCSV() {
@@ -241,5 +251,14 @@ public class PulsarService {
 
         pulsars.add(low, pulsar);
         log.info("Pulsar '{}' added successfully.", pulsar.getName());
+    }
+
+    private void writeKeyToFile(String key) throws PulsarException {
+        try(FileWriter fileWriter = new FileWriter("src/main/resources/accessKey.txt", false)) {
+            fileWriter.write(key);
+            fileWriter.close();
+        } catch (Exception e) {
+            throw new PulsarException("Failed to write access key to file.");
+        }
     }
 }
