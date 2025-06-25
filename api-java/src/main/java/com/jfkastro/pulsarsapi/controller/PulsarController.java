@@ -19,9 +19,12 @@ import java.util.List;
 @Slf4j
 public class PulsarController {
     private final PulsarService pulsarService;
+    public String key;
 
     public PulsarController(PulsarService pulsarService) {
-        this.pulsarService = new PulsarService();
+        this.pulsarService = pulsarService;
+        String key = pulsarService.generateRandomNumber();
+
     }
 
     /**

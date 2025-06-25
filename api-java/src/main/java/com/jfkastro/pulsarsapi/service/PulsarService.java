@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -171,6 +172,22 @@ public class PulsarService {
         }
         log.warn("Pulsar of ID '{}' not found for replacement.", oldId);
         return null;
+    }
+
+    /**
+     * Generates a random number to serve as a key for administrative purposes.
+     *
+     * @return Returns the generated key.
+     */
+    public String generateRandomNumber() {
+        Random random = new Random();
+        StringBuilder randomNumber = new StringBuilder();
+
+        for (int i = 0; i < 6; ++i) {
+            randomNumber.append(random.nextInt(50));
+        }
+
+        return randomNumber.toString();
     }
 
     private void loadPulsarsFromCSV() {
