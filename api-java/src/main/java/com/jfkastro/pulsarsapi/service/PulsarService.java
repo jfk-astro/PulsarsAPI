@@ -5,12 +5,15 @@ import com.jfkastro.pulsarsapi.exception.PulsarException;
 import com.jfkastro.pulsarsapi.model.Pulsar;
 
 import com.jfkastro.pulsarsapi.util.CSVParser;
+import com.jfkastro.pulsarsapi.util.TXTParser;
 
 import org.springframework.stereotype.Service;
 
+import java.io.FileWriter;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Random;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -173,11 +176,35 @@ public class PulsarService {
         return null;
     }
 
+    /**
+     * Generates a random number to serve as a key for administrative purposes.
+     *
+     * @return Returns the generated key.
+     */
+    public String generateRandomNumber() {
+        Random random = new Random();
+        StringBuilder randomNumber = new StringBuilder();
+
+        for (int i = 0; i < 6; ++i) {
+            randomNumber.append(random.nextInt(50));
+        }
+
+        String key = randomNumber.toString();
+
+        try {
+            writeKeyToFile(key);
+        } catch (PulsarException e) {
+            log.error("Error writing access key to file: {}", e.getMessage());
+        }
+
+        return key;
+    }
+
     private void loadPulsarsFromCSV() {
         try {
             List<Pulsar> pulsarList = CSVParser.parseCSV("src/main/resources/pulsars.csv");
 
-            for(Pulsar p : pulsarList) {
+            for (Pulsar p : pulsarList) {
                 addPulsar(p);
             }
         } catch (Exception exception) {
@@ -185,7 +212,17 @@ public class PulsarService {
         }
     }
 
-    private void addPulsar(Pulsar pulsar) throws PulsarException {
+    @Deprecated
+    private Pulsar createPulsarFromTXT(int line) {
+        try {
+            return TXTParser.parseTxt("src/main/resources/addPulsar.txt", line);
+        } catch (Exception exception) {
+            log.error("Error creating pulsar from TXT file: {}", exception.getMessage());
+        }
+        return null;
+    }
+
+    public void addPulsar(Pulsar pulsar) throws PulsarException {
         // This adds the pulsar using the binary search algorithm.
         // Whenever a pulsar is added, it will automatically be placed in the correct position.
 
@@ -214,5 +251,14 @@ public class PulsarService {
 
         pulsars.add(low, pulsar);
         log.info("Pulsar '{}' added successfully.", pulsar.getName());
+    }
+
+    private void writeKeyToFile(String key) throws PulsarException {
+        try(FileWriter fileWriter = new FileWriter("src/main/resources/accessKey.txt", false)) {
+            fileWriter.write(key);
+            fileWriter.close();
+        } catch (Exception e) {
+            throw new PulsarException("Failed to write access key to file.");
+        }
     }
 }
