@@ -222,7 +222,7 @@ public class PulsarService {
         return null;
     }
 
-    private void addPulsar(Pulsar pulsar) throws PulsarException {
+    public void addPulsar(Pulsar pulsar) throws PulsarException {
         // This adds the pulsar using the binary search algorithm.
         // Whenever a pulsar is added, it will automatically be placed in the correct position.
 
