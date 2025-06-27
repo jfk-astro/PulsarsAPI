@@ -75,7 +75,7 @@ public class PulsarController {
     /**
      * Retrieves a pulsar by ID.
      *
-     * @param id The id of the pulsar to retrieve.
+     * @param id The ID of the pulsar to retrieve.
      * @return A ResponseEntity containing the pulsar if found, or a not found status if not found.
      */
     @GetMapping("/{id}")
@@ -91,6 +91,15 @@ public class PulsarController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Deletes a pulsar by ID and requires administrator key to use.
+     *
+     * @param id The ID of the pulsar to delete.
+     * @param key The entered administrator key for confirmation.
+     * @return If the wrong passkey was entered, the program will return an Unauthorized ResponseEntity.
+     *         If the right passkey was entered and the pulsar exists, the program will return an Ok ResponseEntity.
+     *         If the right passkey was entered and the pulsar does not exist, the program will return a NotFound ResponseEntity.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePulsarById(@PathVariable long id, String key) {
         if (!key.equalsIgnoreCase(accessKey)) {
@@ -108,6 +117,15 @@ public class PulsarController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Deletes a pulsar by name and requires administrator key to use.
+     *
+     * @param name The ID of the pulsar to delete.
+     * @param key The entered administrator key for confirmation.
+     * @return If the wrong passkey was entered, the program will return an Unauthorized ResponseEntity.
+     *         If the right passkey was entered and the pulsar exists, the program will return an Ok ResponseEntity.
+     *         If the right passkey was entered and the pulsar does not exist, the program will return a NotFound ResponseEntity.
+     */
     @DeleteMapping("/{name}")
     public ResponseEntity<String> deletePulsarByName(@PathVariable String name, String key) {
         if (!key.equalsIgnoreCase(accessKey)) {
@@ -125,6 +143,16 @@ public class PulsarController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Replaces a pulsar by ID and requires administrator key to use.
+     *
+     * @param id The ID of the pulsar to delete.
+     * @param key The entered administrator key for confirmation.
+     * @param newPulsar The pulsar to replace the old one
+     * @return If the wrong passkey was entered, the program will return an Unauthorized ResponseEntity.
+     *         If the right passkey was entered and the pulsar exists, the program will return an Ok ResponseEntity.
+     *         If the right passkey was entered and the pulsar does not exist, the program will return a NotFound ResponseEntity.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<String> replacePulsarById(@PathVariable long id, String key, Pulsar newPulsar) {
         if (!key.equalsIgnoreCase(accessKey)) {
@@ -142,6 +170,15 @@ public class PulsarController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Adds a new pulsar and requires administrator key to use.
+     *
+     * @param addedPulsar The ID of the pulsar to delete.
+     * @param key The entered administrator key for confirmation.
+     * @return If the wrong passkey was entered, the program will return an Unauthorized ResponseEntity.
+     *         If the right passkey was entered and the pulsar exists, the program will return an Ok ResponseEntity.
+     *         If the right passkey was entered and the pulsar does not exist, the program will return a NotFound ResponseEntity.
+     */
     @PostMapping("/new")
     public ResponseEntity<String> addNewPulsar(Pulsar addedPulsar, String key) {
         if (!key.equalsIgnoreCase(accessKey)) {
