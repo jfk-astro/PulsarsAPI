@@ -36,10 +36,12 @@ public class PulsarService {
     public List<Pulsar> getAllPulsars() {
         if (pulsars.isEmpty()) {
             log.warn("No pulsars are currently loaded.");
+
             return new ArrayList<>();
         }
 
         log.info("Retrieved {} pulsars.", pulsars.size());
+
         return new ArrayList<>(pulsars);
     }
 
@@ -74,6 +76,7 @@ public class PulsarService {
 
         if (name.isBlank()) {
             log.warn("Attempted to find pulsar with an empty or blank name.");
+
             return null;
         }
 
@@ -97,6 +100,7 @@ public class PulsarService {
         }
 
         log.warn("Pulsar with name '{}' not found.", name);
+
         return null;
     }
 
@@ -110,6 +114,7 @@ public class PulsarService {
 
         if (name.isBlank()) {
             log.warn("Attempted to remove pulsar with an empty or blank name.");
+
             return null;
         }
 
@@ -125,6 +130,7 @@ public class PulsarService {
             if (comparison == 0) {
                 pulsars.remove(midpoint);
                 log.info("Removed pulsar: {}", currentPulsar.getName());
+
                 return currentPulsar;
             } else if (comparison < 0) {
                 low = midpoint + 1;
@@ -134,6 +140,7 @@ public class PulsarService {
         }
 
         log.warn("Pulsar with name '{}' not found for removal.", name);
+
         return null;
     }
 
@@ -149,10 +156,13 @@ public class PulsarService {
             if (p.getId() == id) {
                 pulsars.remove(p);
                 log.info("Removed pulsar of ID: {}", p.getName());
+
                 return p;
             }
         }
+
         log.warn("Pulsar of ID '{}' not found for removal.", id);
+
         return null;
     }
 
@@ -169,10 +179,13 @@ public class PulsarService {
             if (pulsars.get(i).getId() == oldId) {
                 Pulsar oldPulsar = pulsars.get(i);
                 pulsars.set(i, newPulsar);
+
                 return oldPulsar;
             }
         }
+
         log.warn("Pulsar of ID '{}' not found for replacement.", oldId);
+
         return null;
     }
 
@@ -241,6 +254,7 @@ public class PulsarService {
 
             if (comparator == 0) {
                 log.warn("Pulsar with name '{}' already exists.", pulsar.getName());
+
                 return;
             } else if (comparator < 0) {
                 high = midpoint - 1;
@@ -250,13 +264,13 @@ public class PulsarService {
         }
 
         pulsars.add(low, pulsar);
+
         log.info("Pulsar '{}' added successfully.", pulsar.getName());
     }
 
     private void writeKeyToFile(String key) throws PulsarException {
         try(FileWriter fileWriter = new FileWriter("src/main/resources/accessKey.txt", false)) {
             fileWriter.write(key);
-            fileWriter.close();
         } catch (Exception e) {
             throw new PulsarException("Failed to write access key to file.");
         }

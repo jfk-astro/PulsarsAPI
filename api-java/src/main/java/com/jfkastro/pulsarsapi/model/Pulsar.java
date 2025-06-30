@@ -6,44 +6,59 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Pulsar {
-    public static long previousId = 0;
+    private static long previousId = 0;
 
     private long id;
 
     private String name;
-    private String jName;
+    private String bName;
+    private String journalName;
 
-    private Double p1;
-    private Double p0Err;
-    private Double bSurf;
-    private Double dist;
-    private Double p1Err;
     private Double age;
-    private Double dmErr;
-    private Double p0;
-    private Double dm;
-    private Double edot;
+    private Double distance;
 
-    public Pulsar(String name, Double p1, Double p0Err,
-                  Double bSurf, Double distance, Double p1Err,
-                  Double age, Double dmErr, Double p0,
-                  Double dm, Double edot) {
+    private Double period;
+    private Double periodDerivative;
 
-        this.name = name;
-        this.jName = name.replace(" ", "_");
+    private Double dispersion;
 
-        this.p1 = p1;
-        this.p0Err = p0Err;
-        this.bSurf = bSurf;
-        this.dist = distance;
-        this.p1Err = p1Err;
-        this.age = age;
-        this.dmErr = dmErr;
-        this.p0 = p0;
-        this.dm = dm;
-        this.edot = edot;
-        this.id = previousId;
+    private Double magneticFieldStrength;
+    private Double spinDownLuminosity;
 
-        ++previousId;
+    private Double rightAscensionDegrees;
+    private Double declinationDegrees;
+    private Double parallax;
+
+    private Double raProperMotion;
+    private Double decProperMotion;
+
+    private Double galacticLongitude;
+    private Double galacticLatitude;
+
+    private Double eclipticLongitude;
+    private Double eclipticLatitude;
+
+    private Double properMotionEclipticLongitude;
+    private Double properMotionEclipticLatitude;
+
+    private Double properMotionGalacticLongitude;
+    private Double properMotionGalacticLatitude;
+
+    private Double dispersionError;
+    private Double periodError;
+    private Double periodDerivativeError;
+    private Double rightAscensionError;
+    private Double declinationError;
+    private Double parallaxError;
+    private Double raProperMotionError;
+    private Double decProperMotionError;
+
+    private Double epochOfPosition;
+    private String rightAscensionJournal;
+    private String declinationJournal;
+
+    public Pulsar() {
+        this.id = previousId++;
     }
 }
+
